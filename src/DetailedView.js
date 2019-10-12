@@ -3,6 +3,8 @@ import Button from "@material-ui/core/Button";
 import "./App.css";
 import Header from "./Header";
 import { Container, Badge } from "@material-ui/core";
+import PhoneIcon from "@material-ui/icons/Phone";
+import RoomIcon from "@material-ui/icons/Room";
 import { blockParams } from "handlebars";
 
 function DetailedView(props) {
@@ -49,7 +51,10 @@ function Ticket(props) {
   return (
     <Badge badgeContent={props.body.type} color="primary">
       <div style={styles}>
-        <div>{props.body.number}</div>
+        <div>
+          <PhoneIcon />
+          {props.body.number}
+        </div>
 
         {/* <span style={statusColor}> {props.body.status}</span> */}
         {/* <span style={statusColor}> {props.body.type} </span> */}
@@ -60,7 +65,9 @@ function Ticket(props) {
         <div>
           <span> Address: </span> <span> {props.body.address} </span>
           {/* //TODO: Add font awesome */}
-          <Button>&</Button>
+          <Button>
+            <RoomIcon />
+          </Button>
         </div>
       </div>
     </Badge>
