@@ -1,12 +1,36 @@
 package routes
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.model.HttpMethods.{GET, OPTIONS, POST, PATCH, PUT}
+import akka.http.scaladsl.model.headers.{HttpOriginRange, `Access-Control-Allow-Headers`, `Access-Control-Allow-Methods`, `Access-Control-Allow-Origin`}
+import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
 import akka.http.scaladsl.server.Directives.{complete, _}
+import akka.http.scaladsl.server.{Directive0, Route}
 import service._
+
 import scala.concurrent.ExecutionContext
 import scala.util.Success
 
+trait CorsSupport {
+  lazy val allowedOrigin = HttpOriginRange.*
+
+  //this directive adds access control headers to normal responses
+  private def addAccessControlHeaders: Directive0 = {
+    respondWithHeaders(
+      `Access-Control-Allow-Origin`(allowedOrigin),
+      `Access-Control-Allow-Headers`("Accept", "Content-Type", "X-Requested-With", "Access-Control-Allow-Origin")
+    )
+  }
+
+  //this handles preflight OPTIONS requests.
+  private def preflightRequestHandler: Route = options {
+    complete(HttpResponse(StatusCodes.OK).withHeaders(`Access-Control-Allow-Methods`(OPTIONS, POST, GET, PATCH, PUT)))
+  }
+
+  def corsHandler(r: Route) = addAccessControlHeaders {
+    preflightRequestHandler ~ r
+  }
+}
 
 trait CatamaranRoutes extends SprayJsonSupport with ResponseFormats {
   implicit val ec: ExecutionContext

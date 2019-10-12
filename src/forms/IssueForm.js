@@ -53,8 +53,12 @@ export default function IssueForm() {
 
   const handleSubmit = event => {
     event.preventDefault();
+    
     fetch("http://localhost:4000/issue", {
       method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(issue)
     })
     .then((response) => {

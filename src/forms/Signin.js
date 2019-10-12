@@ -62,8 +62,11 @@ export default function SigninForm() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    fetch("http://localhost:4000/validateLogin", {
+    fetch("http://localhost:4000/login", {
       method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ email, password })
     })
     .then((response) => navigate('/'))

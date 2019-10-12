@@ -63,6 +63,9 @@ export default function RegistrationForm() {
     event.preventDefault();
     fetch("http://localhost:4000/volunteer", {
       method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(userDetails)
     })
     .then((response) => {

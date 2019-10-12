@@ -4,9 +4,9 @@ import models.{Ticket, Volunteer}
 import spray.json.DefaultJsonProtocol
 import utils.JsonSupport
 
-case class VolunteerInfo(firstName: String, lastName: String, gender: String, email: String, password: String, phoneNo: String)
+case class VolunteerInfo(firstName: String, lastName: String, gender: String, email: String, password: String, phone: String)
 
-case class TicketInput(issueType: String, message: String, address: String, phoneNo: String)
+case class TicketInput(issueType: String, message: String, address: String, phone: String)
 case class UserInfo(email: String, password: String)
 
 case class TicketPatch(id: String, status: String, volunteer: Option[VolunteerInfo])

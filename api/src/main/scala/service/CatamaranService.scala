@@ -64,16 +64,16 @@ class CatamaranService(ticketDao: TicketDao, userDao: UserDao, volunteerDao: Vol
     getVolunteer(volunteerInfo).flatMap {
       case None => Future(VolunteerNotFound(s"No volunteer found with name ${volunteerInfo.firstName} ${volunteerInfo.lastName}"))
       case Some(v) => for {
-        _ <- ticketDao.updateTicket(ticket.id, ticket.status)
-        _ <- assignedTicketDao.addUser(AssignedTicket(ticket.id, v.id))
-      } yield TicketUpdateSuccess
+        ticketId <- ticketDao.updateTicket(ticket.id, ticket.status).map(_ => ticket.id)
+        response <- assignedTicketDao.assignUser(AssignedTicket(ticketId, v.id)).map(_ => TicketUpdateSuccess)
+      } yield response
     }
   }
 
   def getVolunteer(volunteerInfo: VolunteerInfo): Future[Option[Volunteer]] = {
     volunteerDao
       .findVolunteerBy(volunteerInfo.firstName, volunteerInfo.lastName, volunteerInfo.email, volunteerInfo.gender,
-        volunteerInfo.phoneNo)
+        volunteerInfo.phone)
   }
 
   def registerUser(volunteerInfo: VolunteerInfo) = {

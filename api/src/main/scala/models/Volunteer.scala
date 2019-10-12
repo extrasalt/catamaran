@@ -10,7 +10,7 @@ case class Volunteer(id: UUID, firstName: String, lastName: String, gender: Stri
 
 object Volunteer {
   def apply(volunteerInfo: VolunteerInfo): Volunteer = {
-    Volunteer(UUID.randomUUID(), volunteerInfo.firstName, volunteerInfo.lastName, volunteerInfo.gender, volunteerInfo.email, volunteerInfo.phoneNo)
+    Volunteer(UUID.randomUUID(), volunteerInfo.firstName, volunteerInfo.lastName, volunteerInfo.gender, volunteerInfo.email, volunteerInfo.phone)
   }
 }
 

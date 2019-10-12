@@ -17,7 +17,7 @@ object Ticket {
   }
 
   def fromTicketInput(ticketInput: TicketInput, status: String): Ticket = {
-    withRandomUUID(ticketInput.issueType, ticketInput.message, status, ticketInput.address, ticketInput.phoneNo)
+    withRandomUUID(ticketInput.issueType, ticketInput.message, status, ticketInput.address, ticketInput.phone)
   }
 }
 

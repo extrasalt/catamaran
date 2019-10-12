@@ -5,7 +5,7 @@ import akka.http.scaladsl.server.Directives.{complete, get, path}
 import akka.http.scaladsl.server.Directives._
 
 trait HealthRoute {
-  def health = path( "health") {
+  val healthRoutes = path( "health") {
     get {
       complete(OK)
     }
