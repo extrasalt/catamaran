@@ -4,10 +4,10 @@ import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives.{complete, _}
 import service._
+
 import scala.concurrent.ExecutionContext
 
-
-trait CatamaranRoutes extends ResponseFormats with SprayJsonSupport {
+trait CatamaranRoutes extends  SprayJsonSupport with ResponseFormats {
   implicit val ec: ExecutionContext
 
   def catamaranService: CatamaranService
@@ -27,6 +27,16 @@ trait CatamaranRoutes extends ResponseFormats with SprayJsonSupport {
         complete(catamaranService.registerUser(volunteerInfo))
       }
     }
+  } ~ path("show" / Segment) { issueId =>
+    post {
+      onSuccess(catamaranService.getTicket(issueId)) {
+        case TicketNotFound(msg) => complete((StatusCodes.NotFound, msg))
+        case TicketFound(ticket) => complete((StatusCodes.Found, ticket))
+        case TicketFetchError(msg) => complete((StatusCodes.BadRequest, msg))
+      }
+
+    }
+
   }
 
 }

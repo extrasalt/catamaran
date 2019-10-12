@@ -1,5 +1,7 @@
 package dao
 
+import java.util.UUID
+
 import models.{Ticket, TicketSchema}
 import sql.SqlDatabase
 
@@ -10,12 +12,16 @@ class CatamaranDao(protected val database: SqlDatabase)(implicit val ec: Executi
   import database._
   import database.driver.api._
 
-  def addTicket(ticket: Ticket) = {
+  def addTicket(ticket: Ticket): Future[Ticket] = {
     db.run(tickets += ticket).map(_ => ticket)
   }
 
   def listTickets(): Future[Seq[Ticket]] = {
     db.run(tickets.result)
+  }
+
+  def getTicketById(id: UUID): Future[Option[Ticket]] = {
+    db.run(tickets.filter(_.id === id).result).map(_.headOption)
   }
 
 
