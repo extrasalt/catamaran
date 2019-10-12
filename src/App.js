@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "./logo.svg";
+
 import "./App.css";
 
 function DetailedView() {
@@ -8,7 +9,7 @@ function DetailedView() {
       <div className="card">
         <h3>Ticket Info</h3>
         <div>
-          <span style={{}}> Status: </span> <span> Dispatched </span>
+          <span> Status: </span> <span> Dispatched </span>
         </div>
         <div>
           <span> Type: </span> <span> Supplies </span>
