@@ -6,28 +6,34 @@ import "./App.css";
 function DetailedView() {
   return (
     <div>
-      <div className="card">
-        <h3>Ticket Info</h3>
-        <div>
-          <span> Status: </span> <span> Dispatched</span>
-        </div>
-        <div>
-          <span> Type: </span> <span> Supplies </span>
-        </div>
-        <div>
-          <span> Message: </span> <span> Fire!! Fire!! </span>
-        </div>
-        <div>
-          <span> Address: </span> <span> OMR perungudi </span>
-          <button>Map</button>
-        </div>
-
-        <div>
-          <span> Number: </span> <span> 1234</span>
-        </div>
-      </div>
+      <Ticket />
       <ShareOnWhatsapp message="Fire!! Fire!!" />
       <VolunteerCard />
+    </div>
+  );
+}
+
+function Ticket() {
+  return (
+    <div className="card">
+      <h3>Ticket Info</h3>
+      <div>
+        <span> Status: </span> <span> Dispatched</span>
+      </div>
+      <div>
+        <span> Type: </span> <span> Supplies </span>
+      </div>
+      <div>
+        <span> Message: </span> <span> Fire!! Fire!! </span>
+      </div>
+      <div>
+        <span> Address: </span> <span> OMR perungudi </span>
+        <button>Map</button>
+      </div>
+
+      <div>
+        <span> Number: </span> <span> 1234</span>
+      </div>
     </div>
   );
 }
@@ -47,4 +53,4 @@ function VolunteerCard() {
   );
 }
 
-export default DetailedView;
+export { DetailedView, Ticket };

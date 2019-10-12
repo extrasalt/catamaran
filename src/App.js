@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
-import {useRoutes} from 'hookrouter';
-import Routes from './Router';
+import { useRoutes } from "hookrouter";
+import Routes from "./Router";
 
 function Nav() {
   var style = {
@@ -13,8 +13,17 @@ function Nav() {
   return <div style={style}> </div>;
 }
 
+// function App() {
+//   return (
+//     <div className="App">
+//       <Nav />
+//       <DetailedView />
+//     </div>
+//   );
+// }
+
 function App() {
-  const routeResult = useRoutes(Routes)
+  const routeResult = useRoutes(Routes);
   return routeResult;
 }
 
