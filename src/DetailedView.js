@@ -2,6 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import "./App.css";
 import Header from "./Header";
+import { Container } from "@material-ui/core";
 
 function DetailedView(props) {
   var issueId = props.id;
@@ -14,19 +15,31 @@ function DetailedView(props) {
   };
   return (
     <div>
-      <Ticket id={issueId} body={issueBody} />
-      <ShareOnWhatsapp message="Fire!! Fire!!" />
-      <VolunteerCard />
+      <Header></Header>
+      <Container maxWidth="sm" style={{ marginTop: 40 }}>
+        <Ticket id={issueId} body={issueBody} />
+        <ShareOnWhatsapp message="Fire!! Fire!!" />
+        <VolunteerCard />
+      </Container>
     </div>
   );
 }
 
 function Ticket(props) {
-  console.log(props);
+  var styles = {
+    padding: 5,
+    paddingLeft: 10
+  };
+
+  var statusColor = {
+    padding: 3,
+    backgroundColor: "#eee",
+    float: "right"
+  };
   return (
-    <div>
-      <h3 style={{ display: "inline" }}>1234</h3>
-      <span style={{ float: "right" }}> {props.body.status}</span>
+    <div style={styles}>
+      <span style={{ display: "inline" }}>1234</span>
+      <span style={statusColor}> {props.body.status}</span>
       <div>
         <span> Type: </span> <span> {props.body.type} </span>
       </div>

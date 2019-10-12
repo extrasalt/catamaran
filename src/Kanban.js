@@ -113,10 +113,10 @@ class KanbanColumn extends React.Component {
       verticalAlign: "top",
       marginRight: "5px",
       marginBottom: "5px",
-      paddingLeft: "5px",
+      paddingLeft: "10px",
+      paddingRight: "10px",
       paddingTop: "0px",
-      width: "370px",
-      textAlign: "center",
+      width: "350px",
       borderRadius: 5,
       backgroundColor: this.state.mouseIsHovering ? "#ccc" : "#eee"
     };
