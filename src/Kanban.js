@@ -117,7 +117,7 @@ class KanbanColumn extends React.Component {
       paddingTop: "0px",
       width: "370px",
       textAlign: "center",
-      backgroundColor: this.state.mouseIsHovering ? "#d3d3d3" : "#f0eeee"
+      backgroundColor: this.state.mouseIsHovering ? "#ef5956" : "#ef5956"
     };
     return (
       <div
@@ -160,13 +160,17 @@ class KanbanCard extends React.Component {
       number: "123"
     };
     const cardStyle = {
-      backgroundColor: "#f9f7f7",
+      backgroundColor: "#ef5956",
       paddingLeft: "0px",
       paddingTop: "5px",
       paddingBottom: "5px",
       marginLeft: "0px",
       marginRight: "5px",
-      marginBottom: "5px"
+      marginBottom: "5px",
+      borderRadius: 5,
+      background: "#fff",
+      boxShadow:
+        "0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23)"
     };
 
     return (

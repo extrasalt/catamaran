@@ -24,18 +24,18 @@ function DetailedView(props) {
 function Ticket(props) {
   console.log(props);
   return (
-    <div className="card">
+    <div>
       <h3 style={{ display: "inline" }}>1234</h3>{" "}
       <span style={{ float: "right" }}> {props.body.status}</span>
       <div>
         <span> Type: </span> <span> {props.body.type} </span>
       </div>
-      <div>
-        <span> Message: </span> <span> {props.body.message} </span>
-      </div>
+      {/* //TODO: LIMIT height */}
+      <div>{props.body.message}</div>
       <div>
         <span> Address: </span> <span> {props.body.address} </span>
-        <button>Map</button>
+        {/* //TODO: Add font awesome */}
+        <Button>&</Button>
       </div>
     </div>
   );
@@ -48,7 +48,7 @@ function ShareOnWhatsapp(props) {
 
 function VolunteerCard() {
   return (
-    <div className="card">
+    <div>
       <h3>Volunteer Details</h3>
       Volunteer name <br />
       82918391823
