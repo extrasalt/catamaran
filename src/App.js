@@ -1,8 +1,7 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import DetailedView from "./DetailedView.js";
-import IssueForm from "./forms/IssueForm";
+import {useRoutes} from 'hookrouter';
+import Routes from './Router';
 
 function Nav() {
   var style = {
@@ -15,13 +14,8 @@ function Nav() {
 }
 
 function App() {
-  return (
-    <div className="App">
-      <Nav />
-      <DetailedView />
-      <IssueForm />
-    </div>
-  );
+  const routeResult = useRoutes(Routes)
+  return routeResult;
 }
 
 export default App;

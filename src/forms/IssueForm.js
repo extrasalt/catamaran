@@ -47,7 +47,7 @@ export default function IssueForm() {
         </Typography>
         <form className={classes.form} method="POST" action="http://localhost:8000">
           <FormLabel component="legend">Issue Type</FormLabel>
-          <RadioGroup horizontal onChange={handleChange} value={issueType}>
+          <RadioGroup onChange={handleChange} value={issueType}>
             <FormControlLabel value="supplies" control={<Radio />} label="Supplies" />
             <FormControlLabel value="stranded" control={<Radio />} label="Stranded" />
           </RadioGroup>
