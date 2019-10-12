@@ -9,6 +9,10 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { navigate } from 'hookrouter';
 import Header from '../Header';
 
 const useStyles = makeStyles(theme => ({
@@ -34,10 +38,35 @@ const useStyles = makeStyles(theme => ({
 
 export default function IssueForm() {
   const classes = useStyles();
-  const [issueType, setIssueType] = useState('supplies');
-  const handleChange = event => {
-    setIssueType(event.target.value);
+  const [issue, setIssue] = useState({issueType: "", message: "", address: "", phone: ""});
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
+  const handleChange = event => {
+    setIssue({...issue, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    fetch("http://localhost:4000/issue", {
+      method: "POST",
+      body: JSON.stringify(issue)
+    })
+    .then((response) => {
+      setMessage('Issue created. Please check your whatsapp for more information.');
+      setOpen(true);
+      navigate('/create');
+    })
+    .catch((error) => {
+      setMessage('Error while creating Issue. Please try again in sometime.');
+      setOpen(true);
+    });
+  }
 
   return (
     <div>
@@ -48,9 +77,9 @@ export default function IssueForm() {
           <Typography component="h1" variant="h5">
             Issue
           </Typography>
-          <form className={classes.form} method="POST" action="http://localhost:8000">
+          <form className={classes.form} onSubmit={handleSubmit}>
             <FormLabel component="legend">Issue Type</FormLabel>
-            <RadioGroup onChange={handleChange} value={issueType}>
+            <RadioGroup name="issueType" onChange={handleChange}>
               <FormControlLabel value="supplies" control={<Radio />} label="Supplies" />
               <FormControlLabel value="stranded" control={<Radio />} label="Stranded" />
             </RadioGroup>
@@ -63,6 +92,7 @@ export default function IssueForm() {
               id="message"
               label="Message"
               name="message"
+              onChange={handleChange}
               autoFocus
               multiline
             />
@@ -75,6 +105,7 @@ export default function IssueForm() {
               name="address"
               label="Address"
               id="address"
+              onChange={handleChange}
               multiline
             />
             <FormLabel component="legend">Contact Number</FormLabel>
@@ -86,6 +117,7 @@ export default function IssueForm() {
               name="phone"
               label="Phone"
               id="phone"
+              onChange={handleChange}
             />
             <Button
               type="submit"
@@ -99,6 +131,30 @@ export default function IssueForm() {
           </form>
         </div>
       </Container>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">{ message }</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="close"
+            color="inherit"
+            className={classes.close}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      />
     </div>
   );
 }
