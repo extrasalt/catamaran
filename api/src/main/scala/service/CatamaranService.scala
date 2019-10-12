@@ -1,12 +1,11 @@
 package service
 
-import dao.CatamaranDao
-import models.Ticket
-import routes.TicketInput
+import dao.{CatamaranDao, UserDao, VolunteerDao}
+import models.{Ticket, User, Volunteer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CatamaranService(catamaranDao: CatamaranDao)(implicit val ec: ExecutionContext) {
+class CatamaranService(catamaranDao: CatamaranDao, userDao: UserDao, volunteerDao: VolunteerDao)(implicit val ec: ExecutionContext) {
 
   def createTicket(ticketInput: TicketInput): Future[TicketInsertResult] = {
     findIfDuplicateTicketExists(ticketInput).flatMap {
@@ -26,6 +25,13 @@ class CatamaranService(catamaranDao: CatamaranDao)(implicit val ec: ExecutionCon
     }
   }
 
+  def registerUser(volunteerInfo: VolunteerInfo) = {
+    val newVolunteer = Volunteer(volunteerInfo)
+    for {
+      volunteer <- volunteerDao.addVolunteer(newVolunteer).map(_ => newVolunteer)
+      userDetails <- userDao.addUser(User(volunteer.id, volunteer.email, volunteerInfo.password)).map(_ => newVolunteer)
+    } yield userDetails
+  }
 }
 
 

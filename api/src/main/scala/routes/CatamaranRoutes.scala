@@ -2,20 +2,12 @@ package routes
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes
-import service.{CatamaranService, TicketDuplicateFound, TicketInsertSuccess}
 import akka.http.scaladsl.server.Directives.{complete, _}
-import spray.json._
-
+import service._
 import scala.concurrent.ExecutionContext
 
 
-case class TicketInput(issueType: String, message: String, address: String, phoneNo: String)
-
-trait TicketFormats extends DefaultJsonProtocol {
-  implicit val ticketInputFormat = jsonFormat4(TicketInput.apply)
-}
-
-trait CatamarnRoutes extends TicketFormats with SprayJsonSupport {
+trait CatamaranRoutes extends ResponseFormats with SprayJsonSupport {
   implicit val ec: ExecutionContext
 
   def catamaranService: CatamaranService
@@ -27,6 +19,12 @@ trait CatamarnRoutes extends TicketFormats with SprayJsonSupport {
           case TicketDuplicateFound(msg) => complete((StatusCodes.Conflict, msg))
           case TicketInsertSuccess(msg) => complete((StatusCodes.OK, msg))
         }
+      }
+    }
+  } ~ path("volunteer") {
+    post {
+      entity(as[VolunteerInfo]) { volunteerInfo =>
+        complete(catamaranService.registerUser(volunteerInfo))
       }
     }
   }

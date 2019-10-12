@@ -28,7 +28,7 @@ val jodaTime         = "joda-time" % "joda-time" % "2.9.9"
 val jodaConvert      = "org.joda" % "joda-convert" % "1.8.1"
 val jodaDependencies = Seq(jodaTime, jodaConvert)
 
-val slickVersion = "3.2.0"
+val slickVersion = "3.3.0"
 val slick = "com.typesafe.slick" %% "slick" % slickVersion
 val slickHikari = "com.typesafe.slick" %% "slick-hikaricp" % slickVersion
 val postgres = "org.postgresql" % "postgresql" % "9.4.1212"

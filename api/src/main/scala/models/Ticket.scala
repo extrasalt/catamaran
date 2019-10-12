@@ -4,7 +4,7 @@ import java.sql.Timestamp
 import java.util.UUID
 
 import org.joda.time.DateTime
-import routes.TicketInput
+import service.TicketInput
 import slick.lifted
 import sql.SqlDatabase
 
