@@ -201,25 +201,28 @@ let tickets = [
   {
     status: "Dispatched",
     type: "Supplies",
-    message: "Help need supplies",
+    message:
+      "Help! Need supplies at lorem impsum nagar. We've been starving for 48 hours now and nobody has reached us.",
     address: "OMR",
-    number: "123",
+    number: "9008080882",
     project_stage: 1
   },
   {
     status: "Open",
     type: "Stranded",
-    message: "Stranded on XXX lane",
+    message:
+      "Stranded inside Ceebruhs Boulevard. Water for 20 feet. First floor is compeltely underwater. We're in the fourth floor with no way to get out ",
     address: "Perungudi",
-    number: "444444",
+    number: "9008444444",
     project_stage: 2
   },
   {
     status: "Completed",
     type: "Stranded",
-    message: "Need help checking on my family",
+    message:
+      "Need help checking on my family. My family (Amit Kumar Doe and Ananta Doo) in Perungudi has not been reachable for the past 20 hours. Please check on them",
     address: "Perungudi2",
-    number: "444445",
+    number: "8479814445",
     project_stage: 3
   }
 ];
