@@ -2,41 +2,32 @@ import React, { useState } from "react";
 import Kanban from "./Kanban.js";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 const CssTextField = withStyles({
   root: {
-    '& label.Mui-focused': {
-      color: 'green',
+    "& label.Mui-focused": {
+      color: "green"
     },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'green',
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "green"
     },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: "#ef4056",
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#ef4056"
       },
-      '&:hover fieldset': {
-        borderColor: 'green',
+      "&:hover fieldset": {
+        borderColor: "green"
       },
-      '&.Mui-focused fieldset': {
-        borderColor: 'green',
-      },
-    },
-  },
+      "&.Mui-focused fieldset": {
+        borderColor: "green"
+      }
+    }
+  }
 })(TextField);
 
 function BoardView() {
-  var style = {
-    width: "100%",
-    margin: "auto",
-    height: 40,
-    marginLeft: 30,
-    marginBottom: 20
-  };
-
-
-  const [searchInput, setSearchInput] = useState('Search');
+  const [searchInput, setSearchInput] = useState("Search");
 
   const handleChange = event => {
     setSearchInput(event.target.value);
@@ -52,12 +43,12 @@ function BoardView() {
         fullWidth
         margin="normal"
         InputLabelProps={{
-          shrink: true,
+          shrink: true
         }}
         onChange={handleChange}
         variant="outlined"
       />
-      <Kanban data={searchInput}/>
+      <Kanban data={searchInput} />
     </Container>
   );
 }

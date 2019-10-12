@@ -131,7 +131,7 @@ class KanbanColumn extends React.Component {
         }}
       >
         <h4>
-          {this.props.stage}. {this.props.name} ({this.props.projects.length})
+          {this.props.name} ({this.props.projects.length})
         </h4>
         {this.generateKanbanCards()}
         <br />

@@ -25,10 +25,8 @@ function Ticket(props) {
   console.log(props);
   return (
     <div className="card">
-      <h3>Ticket Info</h3>
-      <div>
-        <span> Status: </span> <span> {props.body.status}</span>
-      </div>
+      <h3 style={{ display: "inline" }}>1234</h3>{" "}
+      <span style={{ float: "right" }}> {props.body.status}</span>
       <div>
         <span> Type: </span> <span> {props.body.type} </span>
       </div>
@@ -38,10 +36,6 @@ function Ticket(props) {
       <div>
         <span> Address: </span> <span> {props.body.address} </span>
         <button>Map</button>
-      </div>
-
-      <div>
-        <span> Number: </span> <span> 1234</span>
       </div>
     </div>
   );
@@ -54,7 +48,7 @@ function ShareOnWhatsapp(props) {
 
 function VolunteerCard() {
   return (
-    <div class="card">
+    <div className="card">
       <h3>Volunteer Details</h3>
       Volunteer name <br />
       82918391823
