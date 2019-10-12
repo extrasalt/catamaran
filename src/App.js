@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
-import { useRoutes } from "hookrouter";
-import Routes from "./Router";
+import {useRoutes, usePath} from 'hookrouter';
+import Routes from './Router';
 
 function Nav() {
   var style = {
@@ -13,18 +13,19 @@ function Nav() {
   return <div style={style}> </div>;
 }
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <Nav />
-//       <DetailedView />
-//     </div>
-//   );
-// }
+const SmartNotFound = () => {
+	const path = usePath();
+	return (
+		<React.Fragment>
+			<h3>404 - Not Found</h3>
+			<p>Invalid path: {path}</p>
+		</React.Fragment>
+	);
+};
 
 function App() {
-  const routeResult = useRoutes(Routes);
-  return routeResult;
+  const routeResult = useRoutes(Routes)
+  return routeResult || <SmartNotFound />;
 }
 
 export default App;
