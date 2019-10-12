@@ -2,7 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import "./App.css";
 import Header from "./Header";
-import { Container } from "@material-ui/core";
+import { Container, Badge } from "@material-ui/core";
+import { blockParams } from "handlebars";
 
 function DetailedView(props) {
   var issueId = props.id;
@@ -36,20 +37,30 @@ function Ticket(props) {
     backgroundColor: "#eee",
     float: "right"
   };
+
+  var messageBubble = {
+    display: "block",
+    backgroundColor: "#f0f0ff",
+    margin: 5,
+    padding: 3,
+    borderRadius: 5
+  };
   return (
     <div style={styles}>
-      <span style={{ display: "inline" }}>1234</span>
-      <span style={statusColor}> {props.body.status}</span>
-      <div>
-        <span> Type: </span> <span> {props.body.type} </span>
-      </div>
-      {/* //TODO: LIMIT height */}
-      <div>{props.body.message}</div>
-      <div>
-        <span> Address: </span> <span> {props.body.address} </span>
-        {/* //TODO: Add font awesome */}
-        <Button>&</Button>
-      </div>
+      <Badge badgeContent={props.body.type} color="primary">
+        <div>1234</div>
+
+        {/* <span style={statusColor}> {props.body.status}</span> */}
+        {/* <span style={statusColor}> {props.body.type} </span> */}
+        {/* //TODO: LIMIT height */}
+        <div style={messageBubble}>{props.body.message}</div>
+
+        <div>
+          <span> Address: </span> <span> {props.body.address} </span>
+          {/* //TODO: Add font awesome */}
+          <Button>&</Button>
+        </div>
+      </Badge>
     </div>
   );
 }
