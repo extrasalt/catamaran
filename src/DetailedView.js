@@ -32,7 +32,8 @@ function Ticket(props) {
   console.log(props);
   var styles = {
     padding: 5,
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: "#444"
   };
 
   var statusColor = {
@@ -45,7 +46,7 @@ function Ticket(props) {
     display: "block",
     backgroundColor: "#f0f0ff",
     margin: 5,
-    padding: 3,
+    padding: 10,
     borderRadius: 5
   };
   return (
