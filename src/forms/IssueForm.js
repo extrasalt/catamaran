@@ -9,6 +9,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Header from '../Header';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -39,62 +40,65 @@ export default function IssueForm() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Issue
-        </Typography>
-        <form className={classes.form} method="POST" action="http://localhost:8000">
-          <FormLabel component="legend">Issue Type</FormLabel>
-          <RadioGroup onChange={handleChange} value={issueType}>
-            <FormControlLabel value="supplies" control={<Radio />} label="Supplies" />
-            <FormControlLabel value="stranded" control={<Radio />} label="Stranded" />
-          </RadioGroup>
-          <FormLabel component="legend">Message</FormLabel>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="message"
-            label="Message"
-            name="message"
-            autoFocus
-            multiline
-          />
-          <FormLabel component="legend">Address</FormLabel>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="address"
-            label="Address"
-            id="address"
-            multiline
-          />
-          <FormLabel component="legend">Contact Number</FormLabel>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="phone"
-            label="Phone"
-            id="phone"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Submit
-          </Button>
-        </form>
-      </div>
-    </Container>
+    <div>
+      <Header />
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Issue
+          </Typography>
+          <form className={classes.form} method="POST" action="http://localhost:8000">
+            <FormLabel component="legend">Issue Type</FormLabel>
+            <RadioGroup onChange={handleChange} value={issueType}>
+              <FormControlLabel value="supplies" control={<Radio />} label="Supplies" />
+              <FormControlLabel value="stranded" control={<Radio />} label="Stranded" />
+            </RadioGroup>
+            <FormLabel component="legend">Message</FormLabel>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="message"
+              label="Message"
+              name="message"
+              autoFocus
+              multiline
+            />
+            <FormLabel component="legend">Address</FormLabel>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="address"
+              label="Address"
+              id="address"
+              multiline
+            />
+            <FormLabel component="legend">Contact Number</FormLabel>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="phone"
+              label="Phone"
+              id="phone"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Submit
+            </Button>
+          </form>
+        </div>
+      </Container>
+    </div>
   );
 }

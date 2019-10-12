@@ -3,6 +3,7 @@ import Kanban from "./Kanban.js";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
+import Header from "./Header.js";
 
 const CssTextField = withStyles({
   root: {
@@ -34,22 +35,25 @@ function BoardView() {
   };
 
   return (
-    <Container maxWidth="lg">
-      <h1>Tickets</h1>
-      <CssTextField
-        id="standard-full-width"
-        style={{ margin: 8 }}
-        placeholder="Search"
-        fullWidth
-        margin="normal"
-        InputLabelProps={{
-          shrink: true
-        }}
-        onChange={handleChange}
-        variant="outlined"
-      />
-      <Kanban data={searchInput} />
-    </Container>
+    <div>
+      <Header />
+      <Container maxWidth="lg">
+        <h1>Tickets</h1>
+        <CssTextField
+          id="standard-full-width"
+          style={{ margin: 8 }}
+          placeholder="Search"
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={handleChange}
+          variant="outlined"
+        />
+        <Kanban data={searchInput} />
+      </Container>
+    </div>
   );
 }
 

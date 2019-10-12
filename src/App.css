@@ -2,6 +2,11 @@ body {
   background: #ee4c58;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+header, body {
+  font-family: 'Lato' !important;
+}
+
 .card {
   background: #fff;
   border-radius: 2px;

@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/PersonOutline';
+import Header from '../Header';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -46,86 +47,89 @@ export default function RegistrationForm() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <PersonIcon />
-        </Avatar>  
-        <Typography component="h1" variant="h5">
-          Register
-        </Typography>
-        <form className={classes.form} method="POST" action="http://localhost:8000">
-          <FormLabel component="legend">First Name</FormLabel>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="firstname"
-            label="First Name"
-            name="firstname"
-            autoFocus
-          />
-          <FormLabel component="legend">Last Name</FormLabel>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="lastname"
-            label="Last Name"
-            name="lastname"
-            autoFocus
-          />
-          <FormLabel component="legend">Gender</FormLabel>
-          <RadioGroup onChange={handleChange} value={gender}>
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel value="female" control={<Radio />} label="Female" />
-          </RadioGroup>
-          <FormLabel component="legend">Email Address</FormLabel>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            autoFocus
-          />
-          <FormLabel component="legend">Password</FormLabel>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            id="password"
-            type="password"
-          />
-          <FormLabel component="legend">Contact Number</FormLabel>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="phone"
-            label="Phone"
-            id="phone"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+    <div>
+      <Header />
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <PersonIcon />
+          </Avatar>  
+          <Typography component="h1" variant="h5">
             Register
-          </Button>
-        </form>
-      </div>
-    </Container>
+          </Typography>
+          <form className={classes.form} method="POST" action="http://localhost:8000">
+            <FormLabel component="legend">First Name</FormLabel>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="firstname"
+              label="First Name"
+              name="firstname"
+              autoFocus
+            />
+            <FormLabel component="legend">Last Name</FormLabel>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="lastname"
+              label="Last Name"
+              name="lastname"
+              autoFocus
+            />
+            <FormLabel component="legend">Gender</FormLabel>
+            <RadioGroup onChange={handleChange} value={gender}>
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel value="female" control={<Radio />} label="Female" />
+            </RadioGroup>
+            <FormLabel component="legend">Email Address</FormLabel>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              autoFocus
+            />
+            <FormLabel component="legend">Password</FormLabel>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              id="password"
+              type="password"
+            />
+            <FormLabel component="legend">Contact Number</FormLabel>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="phone"
+              label="Phone"
+              id="phone"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Register
+            </Button>
+          </form>
+        </div>
+      </Container>
+    </div>
   );
 }
