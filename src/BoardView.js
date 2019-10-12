@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import Kanban from "./Kanban.js";
-<<<<<<< Updated upstream
 import Container from "@material-ui/core/Container";
-=======
 import TextField from "@material-ui/core/TextField";
->>>>>>> Stashed changes
 
 function BoardView() {
   var style = {
