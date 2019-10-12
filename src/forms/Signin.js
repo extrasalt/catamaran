@@ -11,6 +11,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Header from '../Header';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { navigate } from 'hookrouter';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -40,6 +44,34 @@ const useStyles = makeStyles(theme => ({
 export default function SigninForm() {
   const classes = useStyles();
 
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleInputChange = event => {
+    if(event.target.name == "email") setEmail(event.target.value);
+    else if(event.target.name == "password") setPassword(event.target.value);
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    fetch("http://localhost:4000/validateLogin", {
+      method: "POST",
+      body: JSON.stringify({ email, password })
+    })
+    .then((response) => navigate('/'))
+    .catch((error) => {
+      setOpen(true);
+    });
+  }
+
   return (
     <div>
       <Header />
@@ -52,7 +84,7 @@ export default function SigninForm() {
           <Typography component="h1" variant="h5">
             Sign In
           </Typography>
-          <form className={classes.form} method="POST" action="http://localhost:8000">
+          <form className={classes.form} onSubmit={handleSubmit}>
             <FormLabel component="legend">Email Address</FormLabel>
             <TextField
               variant="outlined"
@@ -62,6 +94,7 @@ export default function SigninForm() {
               id="email"
               label="Email"
               name="email"
+              onChange={handleInputChange}
               autoFocus
             />
             <FormLabel component="legend">Password</FormLabel>
@@ -74,6 +107,7 @@ export default function SigninForm() {
               label="Password"
               id="password"
               type="password"
+              onChange={handleInputChange}
             />
             <Button
               type="submit"
@@ -99,6 +133,30 @@ export default function SigninForm() {
           </form>
         </div>
       </Container>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">Incorrect Username/Password.</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="close"
+            color="inherit"
+            className={classes.close}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      />
     </div>
   );
 }
