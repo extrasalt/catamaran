@@ -3,12 +3,23 @@ package models
 import java.sql.Timestamp
 import java.util.UUID
 
+import org.joda.time.DateTime
+import routes.TicketInput
 import slick.lifted
 import sql.SqlDatabase
 
 case class Ticket(id: UUID, issueType: String, message: String, status: String, address: String, phoneNo: String,
-                  createdDate: Timestamp, dispatchedDate: Timestamp, resolvedDate: Timestamp)
+                  createdDate: Timestamp, dispatchedDate: Option[Timestamp], resolvedDate: Option[Timestamp])
 
+object Ticket {
+  def withRandomUUID(issueType: String, message: String, status: String, address: String, phoneNo: String): Ticket = {
+    Ticket(UUID.randomUUID(), issueType, message, status, address, phoneNo, new Timestamp(DateTime.now().getMillis), None, None)
+  }
+
+  def fromTicketInput(ticketInput: TicketInput, status: String): Ticket = {
+    withRandomUUID(ticketInput.issueType, ticketInput.message, status, ticketInput.address, ticketInput.phoneNo)
+  }
+}
 
 trait TicketSchema {
   protected val database: SqlDatabase
@@ -32,11 +43,13 @@ trait TicketSchema {
 
     def createdDate = column[Timestamp]("created_timestamp")
 
-    def dispatchedDate = column[Timestamp]("dispatched_timestamp")
+    def dispatchedDate = column[Option[Timestamp]]("dispatched_timestamp")
 
-    def resolvedDate = column[Timestamp]("resolved_timestamp")
+    def resolvedDate = column[Option[Timestamp]]("resolved_timestamp")
+
 
     def * = (id, issueType, message, status, address, phoneNo, createdDate, dispatchedDate, resolvedDate) <>
       ((Ticket.apply _).tupled, Ticket.unapply)
   }
+
 }

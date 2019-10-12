@@ -1,14 +1,24 @@
 package routes
 
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
 import com.twitter.scalding.Args
 import com.typesafe.config.{Config, ConfigFactory}
 import com.typesafe.scalalogging.StrictLogging
+import dao.CatamaranDao
+import service.CatamaranService
 import sql.{DatabaseConfig, SqlDatabase}
 
-object CatamaranApi extends App with StrictLogging {
+import scala.concurrent.ExecutionContext
+
+object CatamaranApi extends App with StrictLogging with CatamarnRoutes {
   val cmdArgs = Args(args)
   val host = cmdArgs.optional("host").getOrElse("localhost")
   val port = cmdArgs.optional("port").map(_.toInt).getOrElse(4000)
+
+  implicit lazy val system          = ActorSystem()
+  implicit val ec: ExecutionContext = system.dispatcher
+  implicit lazy val materializer    = ActorMaterializer()
 
   val databaseConfig = new DatabaseConfig {
     override def rootConfig: Config = ConfigFactory.load().getConfig("catamaran")
@@ -17,7 +27,10 @@ object CatamaranApi extends App with StrictLogging {
   val sqlDatabase = SqlDatabase.create(databaseConfig)
   sqlDatabase.updateSchema()
 
-  val service = new ServiceRouter()
+  val catamaranDao = new CatamaranDao(sqlDatabase)
+  val catamaranService = new CatamaranService(catamaranDao)
+
+  val service = new ServiceRouter(catamaranRoutes)
   logger.info(s"Starting server on $host:$port")
   service.bind(host, port)
 }
