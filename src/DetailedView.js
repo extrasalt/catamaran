@@ -47,22 +47,23 @@ function Ticket(props) {
     borderRadius: 5
   };
   return (
-    <div style={styles}>
-      <div>{props.body.number}</div>
+    <Badge badgeContent={props.body.type} color="primary">
+      <div style={styles}>
+        <div>{props.body.number}</div>
 
-      {/* <span style={statusColor}> {props.body.status}</span> */}
-      {/* <span style={statusColor}> {props.body.type} </span> */}
-      {/* //TODO: LIMIT height */}
-      <Badge badgeContent={props.body.type} color="primary">
+        {/* <span style={statusColor}> {props.body.status}</span> */}
+        {/* <span style={statusColor}> {props.body.type} </span> */}
+        {/* //TODO: LIMIT height */}
+
         <div style={messageBubble}>{props.body.message}</div>
-      </Badge>
 
-      <div>
-        <span> Address: </span> <span> {props.body.address} </span>
-        {/* //TODO: Add font awesome */}
-        <Button>&</Button>
+        <div>
+          <span> Address: </span> <span> {props.body.address} </span>
+          {/* //TODO: Add font awesome */}
+          <Button>&</Button>
+        </div>
       </div>
-    </div>
+    </Badge>
   );
 }
 
