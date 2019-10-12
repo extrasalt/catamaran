@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Kanban from "./Kanban.js";
+<<<<<<< Updated upstream
 import Container from "@material-ui/core/Container";
+=======
+import TextField from "@material-ui/core/TextField";
+>>>>>>> Stashed changes
 
 function BoardView() {
   var style = {
@@ -11,17 +15,28 @@ function BoardView() {
     marginBottom: 20
   };
 
-  //   var pageStyle = {
-  //     display: "flex",
-  //     alignItems: "center",
-  //     justifyContent: "center"
-  //   };
+
+  const [searchInput, setSearchInput] = useState('Search');
+
+  const handleChange = event => {
+    setSearchInput(event.target.value);
+  };
 
   return (
     <Container maxWidth="lg">
       <h1>Tickets</h1>
-      <input type="textbox" style={style} />
-      <Kanban />
+      <TextField
+        id="standard-full-width"
+        style={{ margin: 8 }}
+        placeholder="Search"
+        fullWidth
+        margin="normal"
+        InputLabelProps={{
+          shrink: true,
+        }}
+        onChange={handleChange}
+      />
+      <Kanban data={searchInput}/>
     </Container>
   );
 }

@@ -25,7 +25,8 @@ class KanbanBoard extends React.Component {
     this.state = {
       isLoading: true,
       projects: [],
-      draggedOverCol: 0
+      draggedOverCol: 0,
+      data: this.props.data
     };
     this.handleOnDragEnter = this.handleOnDragEnter.bind(this);
     this.handleOnDragEnd = this.handleOnDragEnd.bind(this);
