@@ -15,9 +15,8 @@
 
 .App-link {
   color: #09d3ac;
-} */
-
-.DetailedView {
+}
+*/ .DetailedView {
   margin: auto;
   width: 500px;
   font-size: calc(10px + 2vmin);
@@ -27,8 +26,8 @@
   background: #fff;
   border-radius: 2px;
   display: block;
-  margin: 30px;
-  padding: 30px;
+  margin: auto;
+  padding: 20px;
   position: relative;
   width: 300px;
 

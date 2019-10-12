@@ -47,6 +47,7 @@ class KanbanBoard extends React.Component {
 
   //this is called when a Kanban card dropped over a column (called by card)
   handleOnDragEnd(e, project) {
+    console.log(project);
     const updatedProjects = this.state.projects.slice(0);
     updatedProjects.find(projectObject => {
       return projectObject.name === project.name;
@@ -113,7 +114,7 @@ class KanbanColumn extends React.Component {
       marginBottom: "5px",
       paddingLeft: "5px",
       paddingTop: "0px",
-      width: "400px",
+      width: "370px",
       textAlign: "center",
       backgroundColor: this.state.mouseIsHovering ? "#d3d3d3" : "#f0eeee"
     };
