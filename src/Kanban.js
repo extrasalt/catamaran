@@ -25,7 +25,7 @@ class KanbanBoard extends React.Component {
     this.state = {
       isLoading: true,
       projects: [],
-      draggedOverCol: 0,
+      draggedOverCol: "",
       data: props.data
     };
     this.handleOnDragEnter = this.handleOnDragEnter.bind(this);
@@ -35,15 +35,20 @@ class KanbanBoard extends React.Component {
       { name: "Dispatched", stage: 2 },
       { name: "Completed", stage: 3 }
     ];
+    this.columnMapping = {
+      1: "Open",
+      2: "Dispatched",
+      3: "Completed"
+    };
   }
 
   componentDidMount() {
-    this.setState({ projects: projectList, isLoading: false });
+    this.setState({ projects: tickets, isLoading: false });
   }
 
   //this is called when a Kanban card is dragged over a column (called by column)
   handleOnDragEnter(e, stageValue) {
-    this.setState({ draggedOverCol: stageValue });
+    this.setState({ draggedOverCol: this.columnMapping[stageValue] });
   }
 
   //this is called when a Kanban card dropped over a column (called by card)
@@ -52,7 +57,7 @@ class KanbanBoard extends React.Component {
     const updatedProjects = this.state.projects.slice(0);
     updatedProjects.find(projectObject => {
       return projectObject.name === project.name;
-    }).project_stage = this.state.draggedOverCol;
+    }).status = this.state.draggedOverCol;
     this.setState({ projects: updatedProjects });
   }
 
@@ -69,7 +74,7 @@ class KanbanBoard extends React.Component {
               name={column.name}
               stage={column.stage}
               projects={this.state.projects.filter(project => {
-                return parseInt(project.project_stage, 10) === column.stage;
+                return project.status === column.name;
               })}
               onDragEnter={this.handleOnDragEnter}
               onDragEnd={this.handleOnDragEnd}
@@ -100,7 +105,7 @@ class KanbanColumn extends React.Component {
       return (
         <KanbanCard
           project={project}
-          key={project.name}
+          key={project.number}
           onDragEnd={this.props.onDragEnd}
         />
       );
@@ -148,7 +153,8 @@ class KanbanCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapsed: true
+      collapsed: true,
+      tickets: tickets
     };
   }
 
@@ -181,7 +187,7 @@ class KanbanCard extends React.Component {
           this.props.onDragEnd(e, this.props.project);
         }}
       >
-        <Ticket id={2} body={issueBody} />
+        <Ticket body={this.props.project} />
       </div>
     );
   }
@@ -190,26 +196,29 @@ class KanbanCard extends React.Component {
 /*
  * Projects to be displayed on Kanban Board
  */
-let projectList = [
+let tickets = [
   {
-    name: "Ticket 1",
-    issueType: "",
-    number: "",
-    description: "Help need supplies",
+    status: "Dispatched",
+    type: "Supplies",
+    message: "Help need supplies",
+    address: "OMR",
+    number: "123",
     project_stage: 1
   },
   {
-    name: "Ticket 2",
-    issueType: "",
-    number: "",
-    description: "Stranded on XXX lane",
+    status: "Open",
+    type: "Stranded",
+    message: "Stranded on XXX lane",
+    address: "Perungudi",
+    number: "444444",
     project_stage: 2
   },
   {
-    name: "Ticket 3",
-    issueType: "",
-    number: "",
-    description: "Need help checking on family",
+    status: "Completed",
+    type: "Stranded",
+    message: "Need help checking on my family",
+    address: "Perungudi",
+    number: "444444",
     project_stage: 3
   }
 ];

@@ -27,6 +27,7 @@ function DetailedView(props) {
 }
 
 function Ticket(props) {
+  console.log(props);
   var styles = {
     padding: 5,
     paddingLeft: 10
@@ -48,7 +49,7 @@ function Ticket(props) {
   return (
     <div style={styles}>
       <Badge badgeContent={props.body.type} color="primary">
-        <div>1234</div>
+        <div>{props.body.number}</div>
 
         {/* <span style={statusColor}> {props.body.status}</span> */}
         {/* <span style={statusColor}> {props.body.type} </span> */}
