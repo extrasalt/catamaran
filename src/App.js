@@ -1,8 +1,8 @@
 import React from "react";
 import logo from "./logo.svg";
-
 import "./App.css";
 import DetailedView from "./DetailedView.js";
+import IssueForm from "./forms/IssueForm";
 
 function Nav() {
   var style = {
@@ -19,6 +19,7 @@ function App() {
     <div className="App">
       <Nav />
       <DetailedView />
+      <IssueForm />
     </div>
   );
 }
