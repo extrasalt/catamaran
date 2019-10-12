@@ -1,11 +1,9 @@
 package service
 
-import dao.{CatamaranDao, UserDao, VolunteerDao}
-import models.{Ticket, User, Volunteer}
 import java.util.UUID
 
-import dao.CatamaranDao
-import models.Ticket
+import dao.{CatamaranDao, UserDao, VolunteerDao}
+import models.{Ticket, User, Volunteer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -49,6 +47,12 @@ class CatamaranService(catamaranDao: CatamaranDao, userDao: UserDao, volunteerDa
 
   }
 
+  def validateUser(userInfo: UserInfo) = {
+    for {
+      volunteerId <- userDao.fetchUser(userInfo)
+      volunteer <- if (volunteerId.isDefined) volunteerDao.findVolunteer(volunteerId.get) else Future.successful(None)
+    } yield volunteer
+  }
 }
 
 

@@ -4,8 +4,9 @@ import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives.{complete, _}
 import service._
-
 import scala.concurrent.ExecutionContext
+import scala.util.Success
+
 
 trait CatamaranRoutes extends  SprayJsonSupport with ResponseFormats {
   implicit val ec: ExecutionContext
@@ -36,7 +37,16 @@ trait CatamaranRoutes extends  SprayJsonSupport with ResponseFormats {
       }
 
     }
-
+  } ~ path("login") {
+    post {
+      entity(as[UserInfo]) { userInfo =>
+        onComplete(catamaranService.validateUser(userInfo)) {
+          case Success(Some(volunteer)) => complete(StatusCodes.OK, volunteer)
+          case Success(None) => complete(StatusCodes.Unauthorized)
+          case _ => complete(StatusCodes.InternalServerError)
+        }
+      }
+    }
   }
 
 }
