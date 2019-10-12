@@ -49,6 +49,7 @@ class KanbanBoard extends React.Component {
   //this is called when a Kanban card is dragged over a column (called by column)
   handleOnDragEnter(e, stageValue) {
     this.setState({ draggedOverCol: this.columnMapping[stageValue] });
+    console.log(this.state.draggedOverCol);
   }
 
   //this is called when a Kanban card dropped over a column (called by card)
@@ -56,7 +57,7 @@ class KanbanBoard extends React.Component {
     console.log(project);
     const updatedProjects = this.state.projects.slice(0);
     updatedProjects.find(projectObject => {
-      return projectObject.name === project.name;
+      return projectObject.number === project.number;
     }).status = this.state.draggedOverCol;
     this.setState({ projects: updatedProjects });
   }
@@ -217,8 +218,8 @@ let tickets = [
     status: "Completed",
     type: "Stranded",
     message: "Need help checking on my family",
-    address: "Perungudi",
-    number: "444444",
+    address: "Perungudi2",
+    number: "444445",
     project_stage: 3
   }
 ];
