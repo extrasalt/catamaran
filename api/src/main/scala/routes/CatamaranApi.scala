@@ -6,8 +6,9 @@ import com.twitter.scalding.Args
 import com.typesafe.config.{Config, ConfigFactory}
 import com.typesafe.scalalogging.StrictLogging
 import dao.{AssignedTicketDao, TicketDao, UserDao, VolunteerDao}
-import service.CatamaranService
+import service.{CatamaranService, TwilioClient}
 import sql.{DatabaseConfig, SqlDatabase}
+import utils.AkkaHttpClient
 
 import scala.concurrent.ExecutionContext
 
@@ -23,6 +24,8 @@ object CatamaranApi extends App with StrictLogging with CatamaranRoutes {
   val databaseConfig = new DatabaseConfig {
     override def rootConfig: Config = ConfigFactory.load().getConfig("catamaran")
   }
+  val httpClient                 = AkkaHttpClient()
+  val twilioConfig = ConfigFactory.load().getConfig("catamaran")
 
   val sqlDatabase = SqlDatabase.create(databaseConfig)
   sqlDatabase.updateSchema()
@@ -31,7 +34,8 @@ object CatamaranApi extends App with StrictLogging with CatamaranRoutes {
   val userDao = new UserDao(sqlDatabase)
   val volunteerDao = new VolunteerDao(sqlDatabase)
   val assignedTicketDao = new AssignedTicketDao(sqlDatabase)
-  val catamaranService = new CatamaranService(catamaranDao, userDao, volunteerDao, assignedTicketDao)
+  val twilioClient = TwilioClient(twilioConfig, httpClient)
+  val catamaranService = new CatamaranService(catamaranDao, userDao, volunteerDao, assignedTicketDao, twilioClient)
 
   val service = new ServiceRouter(catamaranRoutes)
   logger.info(s"Starting server on $host:$port")

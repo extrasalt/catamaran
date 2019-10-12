@@ -8,15 +8,17 @@ import models.{AssignedTicket, Ticket, User, Volunteer}
 import scala.concurrent.{ExecutionContext, Future}
 
 class CatamaranService(ticketDao: TicketDao, userDao: UserDao, volunteerDao: VolunteerDao,
-                       assignedTicketDao: AssignedTicketDao)(implicit val ec: ExecutionContext) {
+                       assignedTicketDao: AssignedTicketDao, twilioClient: TwilioClient)(implicit val ec: ExecutionContext) {
 
   def createTicket(ticketInput: TicketInput): Future[TicketInsertResult] = {
     findIfDuplicateTicketExists(ticketInput).flatMap {
       case Some(t) => Future(
         TicketDuplicateFound(s"Could not insert ticket because a duplicate ticket(#${t.id}) has already been created.")
       )
-      case None => ticketDao.addTicket(Ticket.fromTicketInput(ticketInput, "Open"))
-        .map(t => TicketInsertSuccess(s"Ticket ${t.id} was successfully created"))
+      case None => for {
+        t <- ticketDao.addTicket(Ticket.fromTicketInput(ticketInput, "Open"))
+        response <- twilioClient.sendMessage(TwilioRequest("", s"whatsapp:+91${t.phone}", s"Please check your issue status here -> http://localhost:3000/show/${t.id}")).map(_ => TicketInsertSuccess(s"Ticket ${t.id} was successfully created"))
+      } yield response
     }
   }
 

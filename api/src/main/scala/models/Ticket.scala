@@ -8,7 +8,7 @@ import service.TicketInput
 import slick.lifted
 import sql.SqlDatabase
 
-case class Ticket(id: UUID, issueType: String, message: String, status: String, address: String, phoneNo: String,
+case class Ticket(id: UUID, issueType: String, message: String, status: String, address: String, phone: String,
                   createdDate: Timestamp, dispatchedDate: Option[Timestamp], resolvedDate: Option[Timestamp])
 
 object Ticket {
