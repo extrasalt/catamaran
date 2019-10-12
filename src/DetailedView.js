@@ -12,16 +12,16 @@ function DetailedView(props) {
   var issueBody = {
     status: "Dispatched",
     type: "Supplies",
-    message: "Fire!! Fire!!",
+    message: "Fire!! Fire!! There is a lot of things burining",
     address: "OMR",
-    number: "123"
+    number: "9123455667"
   };
   return (
     <div>
       <Header></Header>
       <Container maxWidth="sm" style={{ marginTop: 40 }}>
         <Ticket id={issueId} body={issueBody} />
-        <ShareOnWhatsapp message="Fire!! Fire!!" />
+        {/* <ShareOnWhatsapp message="Fire!! Fire!!" /> */}
         <VolunteerCard />
       </Container>
     </div>
@@ -49,6 +49,9 @@ function Ticket(props) {
     padding: 10,
     borderRadius: 5
   };
+
+  var mapsLink =
+    "https://www.google.com/maps/search/?api=1&query=" + props.body.address;
   return (
     <Badge badgeContent={props.body.type} color="primary">
       <div style={styles}>
@@ -71,7 +74,7 @@ function Ticket(props) {
         <div>
           <span> Address: </span> <span> {props.body.address} </span>
           {/* //TODO: Add font awesome */}
-          <Button>
+          <Button href={mapsLink}>
             <RoomIcon />
           </Button>
         </div>
