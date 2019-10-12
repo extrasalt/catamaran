@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import Button from "@material-ui/core/Button";
 import "./App.css";
 import Header from "./Header";
@@ -26,7 +25,7 @@ function Ticket(props) {
   console.log(props);
   return (
     <div>
-      <h3 style={{ display: "inline" }}>1234</h3>{" "}
+      <h3 style={{ display: "inline" }}>1234</h3>
       <span style={{ float: "right" }}> {props.body.status}</span>
       <div>
         <span> Type: </span> <span> {props.body.type} </span>

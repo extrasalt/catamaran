@@ -117,7 +117,8 @@ class KanbanColumn extends React.Component {
       paddingTop: "0px",
       width: "370px",
       textAlign: "center",
-      backgroundColor: this.state.mouseIsHovering ? "#ef5956" : "#ef5956"
+      borderRadius: 5,
+      backgroundColor: this.state.mouseIsHovering ? "#ccc" : "#eee"
     };
     return (
       <div
@@ -160,7 +161,6 @@ class KanbanCard extends React.Component {
       number: "123"
     };
     const cardStyle = {
-      backgroundColor: "#ef5956",
       paddingLeft: "0px",
       paddingTop: "5px",
       paddingBottom: "5px",
@@ -182,25 +182,6 @@ class KanbanCard extends React.Component {
         }}
       >
         <Ticket id={2} body={issueBody} />
-
-        {/* {this.state.collapsed ? null : (
-          //   <div>
-          //     <strong>Description: </strong>
-          //     {this.props.project.description}
-          //     <br />
-          //   </div>
-          <Ticket />
-        )}
-        <div
-          style={{ width: "100%" }}
-          onClick={e => {
-            this.setState({ collapsed: !this.state.collapsed });
-          }}
-        >
-          {this.state.collapsed
-            ? String.fromCharCode("9660")
-            : String.fromCharCode("9650")}
-        </div> */}
       </div>
     );
   }
