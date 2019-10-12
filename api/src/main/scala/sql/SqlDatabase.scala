@@ -1,6 +1,8 @@
 package sql
 
 import java.net.{Socket, URI}
+import java.sql.Timestamp
+import java.util.Date
 
 import com.typesafe.config.ConfigValueFactory.fromAnyRef
 import com.typesafe.config.{Config, ConfigFactory}
@@ -8,11 +10,21 @@ import com.typesafe.scalalogging.StrictLogging
 import org.flywaydb.core.Flyway
 import slick.jdbc.JdbcBackend.Database
 import DatabaseConfig._
+import slick.jdbc.JdbcProfile
 
 case class SqlDatabase(
                         db: slick.jdbc.JdbcBackend.Database,
-                        connectionString: JdbcConnectionString
+                        connectionString: JdbcConnectionString,
+                        driver:           JdbcProfile
+
                       ) {
+
+  import  driver.api._
+
+  implicit val dateTimeColumnType = MappedColumnType.base[Date, java.sql.Timestamp](
+    d => new Timestamp(d.getTime),
+    identity
+  )
 
   def updateSchema() {
     val flyway = new Flyway()
@@ -74,7 +86,7 @@ object SqlDatabase extends StrictLogging {
   def createPostgresFromConfig(config: DatabaseConfig) = {
     waitForDatabaseToStartUp(config)
     val db = Database.forConfig("db.postgres", config.rootConfig)
-    SqlDatabase(db, postgresConnectionString(config))
+    SqlDatabase(db, postgresConnectionString(config), slick.jdbc.PostgresProfile)
   }
 
   private def waitForDatabaseToStartUp(config: DatabaseConfig): Unit = {
