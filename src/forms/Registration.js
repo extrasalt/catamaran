@@ -11,6 +11,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/PersonOutline';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { navigate } from 'hookrouter';
 import Header from '../Header';
 
 const useStyles = makeStyles(theme => ({
@@ -41,10 +45,36 @@ const useStyles = makeStyles(theme => ({
 export default function RegistrationForm() {
   const classes = useStyles();
 
-  const [gender, setGender] = useState('male');
-  const handleChange = event => {
-    setGender(event.target.value);
+  const [userDetails, setUserDetails] = useState({});
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
+
+  const handleChange = event => {
+    setUserDetails({ ...userDetails, [event.target.name]:   event.target.value });
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    fetch("http://localhost:4000/volunteer", {
+      method: "POST",
+      body: JSON.stringify(userDetails)
+    })
+    .then((response) => {
+      setMessage('User registered successfully.');
+      setOpen(true);
+      navigate('/signin');
+    })
+    .catch((error) => {
+      setMessage('Error while registering a new user. Please try again in sometime.');
+      setOpen(true);
+    });
+  }
 
   return (
     <div>
@@ -56,9 +86,9 @@ export default function RegistrationForm() {
             <PersonIcon />
           </Avatar>  
           <Typography component="h1" variant="h5">
-            Register
+            Volunteer Registration
           </Typography>
-          <form className={classes.form} method="POST" action="http://localhost:8000">
+          <form className={classes.form} onSubmit={handleSubmit}>
             <FormLabel component="legend">First Name</FormLabel>
             <TextField
               variant="outlined"
@@ -68,6 +98,7 @@ export default function RegistrationForm() {
               id="firstname"
               label="First Name"
               name="firstname"
+              onChange={handleChange}
               autoFocus
             />
             <FormLabel component="legend">Last Name</FormLabel>
@@ -79,10 +110,11 @@ export default function RegistrationForm() {
               id="lastname"
               label="Last Name"
               name="lastname"
+              onChange={handleChange}
               autoFocus
             />
             <FormLabel component="legend">Gender</FormLabel>
-            <RadioGroup onChange={handleChange} value={gender}>
+            <RadioGroup name="gender" onChange={handleChange}>
               <FormControlLabel value="male" control={<Radio />} label="Male" />
               <FormControlLabel value="female" control={<Radio />} label="Female" />
             </RadioGroup>
@@ -95,6 +127,7 @@ export default function RegistrationForm() {
               id="email"
               label="Email"
               name="email"
+              onChange={handleChange}
               autoFocus
             />
             <FormLabel component="legend">Password</FormLabel>
@@ -107,6 +140,7 @@ export default function RegistrationForm() {
               label="Password"
               id="password"
               type="password"
+              onChange={handleChange}
             />
             <FormLabel component="legend">Contact Number</FormLabel>
             <TextField
@@ -117,6 +151,7 @@ export default function RegistrationForm() {
               name="phone"
               label="Phone"
               id="phone"
+              onChange={handleChange}
             />
             <Button
               type="submit"
@@ -130,6 +165,30 @@ export default function RegistrationForm() {
           </form>
         </div>
       </Container>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">{ message }</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="close"
+            color="inherit"
+            className={classes.close}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      />
     </div>
   );
 }
