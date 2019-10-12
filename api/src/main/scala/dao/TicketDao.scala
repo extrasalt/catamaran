@@ -7,7 +7,7 @@ import sql.SqlDatabase
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CatamaranDao(protected val database: SqlDatabase)(implicit val ec: ExecutionContext) extends TicketSchema {
+class TicketDao(protected val database: SqlDatabase)(implicit val ec: ExecutionContext) extends TicketSchema {
 
   import database._
   import database.driver.api._
@@ -22,6 +22,10 @@ class CatamaranDao(protected val database: SqlDatabase)(implicit val ec: Executi
 
   def getTicketById(id: UUID): Future[Option[Ticket]] = {
     db.run(tickets.filter(_.id === id).result).map(_.headOption)
+  }
+
+  def updateTicket(id: UUID, status: String) = {
+    db.run(tickets.filter(_.id === id).map(_.status).update(status))
   }
 
 

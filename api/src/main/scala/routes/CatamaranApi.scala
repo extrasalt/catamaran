@@ -5,7 +5,7 @@ import akka.stream.ActorMaterializer
 import com.twitter.scalding.Args
 import com.typesafe.config.{Config, ConfigFactory}
 import com.typesafe.scalalogging.StrictLogging
-import dao.{CatamaranDao, UserDao, VolunteerDao}
+import dao.{AssignedTicketDao, TicketDao, UserDao, VolunteerDao}
 import service.CatamaranService
 import sql.{DatabaseConfig, SqlDatabase}
 
@@ -27,10 +27,11 @@ object CatamaranApi extends App with StrictLogging with CatamaranRoutes {
   val sqlDatabase = SqlDatabase.create(databaseConfig)
   sqlDatabase.updateSchema()
 
-  val catamaranDao = new CatamaranDao(sqlDatabase)
+  val catamaranDao = new TicketDao(sqlDatabase)
   val userDao = new UserDao(sqlDatabase)
   val volunteerDao = new VolunteerDao(sqlDatabase)
-  val catamaranService = new CatamaranService(catamaranDao, userDao, volunteerDao)
+  val assignedTicketDao = new AssignedTicketDao(sqlDatabase)
+  val catamaranService = new CatamaranService(catamaranDao, userDao, volunteerDao, assignedTicketDao)
 
   val service = new ServiceRouter(catamaranRoutes)
   logger.info(s"Starting server on $host:$port")

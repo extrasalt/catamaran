@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext
 import scala.util.Success
 
 
-trait CatamaranRoutes extends  SprayJsonSupport with ResponseFormats {
+trait CatamaranRoutes extends SprayJsonSupport with ResponseFormats {
   implicit val ec: ExecutionContext
 
   def catamaranService: CatamaranService
@@ -21,6 +21,13 @@ trait CatamaranRoutes extends  SprayJsonSupport with ResponseFormats {
           case TicketInsertSuccess(msg) => complete((StatusCodes.OK, msg))
         }
       }
+    } ~ patch {
+      entity(as[TicketPatch]) {
+        ticketPatch => onSuccess(catamaranService.updateTicket(ticketPatch)) {
+          case VolunteerNotFound(msg) => complete((StatusCodes.NotFound, msg))
+          case TicketUpdateSuccess => complete((StatusCodes.OK))
+        }
+      }
     }
   } ~ path("volunteer") {
     post {
@@ -29,7 +36,7 @@ trait CatamaranRoutes extends  SprayJsonSupport with ResponseFormats {
       }
     }
   } ~ path("show" / Segment) { issueId =>
-    post {
+    get {
       onSuccess(catamaranService.getTicket(issueId)) {
         case TicketNotFound(msg) => complete((StatusCodes.NotFound, msg))
         case TicketFound(ticket) => complete((StatusCodes.Found, ticket))
@@ -47,6 +54,11 @@ trait CatamaranRoutes extends  SprayJsonSupport with ResponseFormats {
         }
       }
     }
+  } ~ path("list" / "issues") {
+    get {
+      complete(catamaranService.listTickets())
+    }
+
   }
 
 }
