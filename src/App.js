@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import {useRoutes} from 'hookrouter';
+import {useRoutes, usePath} from 'hookrouter';
 import Routes from './Router';
 
 function Nav() {
@@ -13,9 +13,19 @@ function Nav() {
   return <div style={style}> </div>;
 }
 
+const SmartNotFound = () => {
+	const path = usePath();
+	return (
+		<React.Fragment>
+			<h3>404 - Not Found</h3>
+			<p>Invalid path: {path}</p>
+		</React.Fragment>
+	);
+};
+
 function App() {
   const routeResult = useRoutes(Routes)
-  return routeResult;
+  return routeResult || <SmartNotFound />;
 }
 
 export default App;

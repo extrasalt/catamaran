@@ -1,13 +1,16 @@
 import React from "react";
 import logo from "./logo.svg";
-
+import Button from "@material-ui/core/Button"
 import "./App.css";
 
-function DetailedView() {
+function DetailedView(props) {
+  var issueId = props.id;
   return (
     <div>
       <div className="card">
-        <h3>Ticket Info</h3>
+        <h3>
+          <span> Ticket Info: </span> <span> { issueId } </span>
+        </h3>
         <div>
           <span> Status: </span> <span> Dispatched</span>
         </div>
@@ -34,7 +37,7 @@ function DetailedView() {
 
 function ShareOnWhatsapp(props) {
   var whatsappLink = "whatsapp://send?text=" + props.message;
-  return <a href={whatsappLink}> Share on whatsapp </a>;
+  return <Button href={whatsappLink}> Share on whatsapp </Button>;
 }
 
 function VolunteerCard() {
