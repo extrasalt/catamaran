@@ -151,6 +151,13 @@ class KanbanCard extends React.Component {
   }
 
   render() {
+    var issueBody = {
+      status: "Dispatched",
+      type: "Supplies",
+      message: "Fire!! Fire!!",
+      address: "OMR",
+      number: "123"
+    };
     const cardStyle = {
       backgroundColor: "#f9f7f7",
       paddingLeft: "0px",
@@ -169,7 +176,7 @@ class KanbanCard extends React.Component {
           this.props.onDragEnd(e, this.props.project);
         }}
       >
-        <Ticket />
+        <Ticket id={2} body={issueBody} />
 
         {/* {this.state.collapsed ? null : (
           //   <div>
