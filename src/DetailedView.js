@@ -51,9 +51,14 @@ function Ticket(props) {
   return (
     <Badge badgeContent={props.body.type} color="primary">
       <div style={styles}>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center"
+          }}
+        >
           <PhoneIcon />
-          {props.body.number}
+          <span>{props.body.number}</span>
         </div>
 
         {/* <span style={statusColor}> {props.body.status}</span> */}
