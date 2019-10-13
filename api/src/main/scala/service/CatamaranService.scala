@@ -23,7 +23,7 @@ class CatamaranService(ticketDao: TicketDao, userDao: UserDao, volunteerDao: Vol
   }
 
   def findIfDuplicateTicketExists(ticketInput: TicketInput): Future[Option[Ticket]] = {
-    ticketDao.listTickets().map {
+    ticketDao.listTickets(None, None).map {
       case tickets => tickets.find {
         ticket => ticket.message == ticketInput.message && ticket.address == ticketInput.address
       }
@@ -49,8 +49,8 @@ class CatamaranService(ticketDao: TicketDao, userDao: UserDao, volunteerDao: Vol
     } yield volunteer
   }
 
-  def listTickets() = {
-    ticketDao.listTickets()
+  def listTickets(statusOpt: Option[String], queryOpt: Option[String]) = {
+    ticketDao.listTickets(statusOpt, queryOpt)
   }
 
   def updateTicket(ticketPatch: TicketPatch): Future[TicketUpdateResult] = {

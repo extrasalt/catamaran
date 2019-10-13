@@ -80,9 +80,13 @@ trait CatamaranRoutes extends SprayJsonSupport with ResponseFormats {
     }
   } ~ path("list" / "issues") {
     get {
-      complete(catamaranService.listTickets())
+      parameters('status.?, 'query.?) { (statusOpt, queryOpt) =>
+         onComplete(catamaranService.listTickets(statusOpt, queryOpt)) {
+           case Success(tickets) => complete(StatusCodes.OK, tickets)
+           case _ => complete(StatusCodes.BadRequest)
+         }
+      }
     }
-
   }
 
 }

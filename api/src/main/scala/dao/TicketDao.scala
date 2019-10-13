@@ -16,8 +16,9 @@ class TicketDao(protected val database: SqlDatabase)(implicit val ec: ExecutionC
     db.run(tickets += ticket).map(_ => ticket)
   }
 
-  def listTickets(): Future[Seq[Ticket]] = {
-    db.run(tickets.result)
+  def listTickets(statusOpt: Option[String], queryOpt: Option[String]): Future[Seq[Ticket]] = {
+    val query = tickets.filterOpt(statusOpt)((table, status) => table.status === status).filterOpt(queryOpt)((table, query) => table.message === query)
+    db.run(query.result)
   }
 
   def getTicketById(id: UUID): Future[Option[Ticket]] = {
@@ -27,7 +28,6 @@ class TicketDao(protected val database: SqlDatabase)(implicit val ec: ExecutionC
   def updateTicket(id: UUID, status: String) = {
     db.run(tickets.filter(_.id === id).map(_.status).update(status))
   }
-
 
 
 }
