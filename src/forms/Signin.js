@@ -69,7 +69,7 @@ export default function SigninForm() {
       },
       body: JSON.stringify({ email, password })
     })
-    .then((response) => navigate('/'))
+    .then((response) => setTimeout(() => navigate('/'), 2000))
     .catch((error) => {
       setOpen(true);
     });

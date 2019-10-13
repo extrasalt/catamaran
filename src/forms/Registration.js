@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 export default function RegistrationForm() {
   const classes = useStyles();
 
-  const [userDetails, setUserDetails] = useState({});
+  const [userDetails, setUserDetails] = useState({gender: "male"});
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const handleClose = (event, reason) => {
@@ -61,7 +61,7 @@ export default function RegistrationForm() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    fetch("http://localhost:4000/volunteer", {
+    fetch("http://localhost:4000/register", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ export default function RegistrationForm() {
     .then((response) => {
       setMessage('User registered successfully.');
       setOpen(true);
-      navigate('/signin');
+      setTimeout(() => navigate('/signin'), 2000);
     })
     .catch((error) => {
       setMessage('Error while registering a new user. Please try again in sometime.');
@@ -100,7 +100,8 @@ export default function RegistrationForm() {
               fullWidth
               id="firstname"
               label="First Name"
-              name="firstname"
+              name="firstName"
+              value={userDetails.firstName}
               onChange={handleChange}
               autoFocus
             />
@@ -112,12 +113,13 @@ export default function RegistrationForm() {
               fullWidth
               id="lastname"
               label="Last Name"
-              name="lastname"
+              name="lastName"
+              value={userDetails.lastName}
               onChange={handleChange}
               autoFocus
             />
             <FormLabel component="legend">Gender</FormLabel>
-            <RadioGroup name="gender" onChange={handleChange}>
+            <RadioGroup name="gender" onChange={handleChange} value={userDetails.gender}>
               <FormControlLabel value="male" control={<Radio />} label="Male" />
               <FormControlLabel value="female" control={<Radio />} label="Female" />
             </RadioGroup>
@@ -130,6 +132,7 @@ export default function RegistrationForm() {
               id="email"
               label="Email"
               name="email"
+              value={userDetails.email}
               onChange={handleChange}
               autoFocus
             />
@@ -141,6 +144,7 @@ export default function RegistrationForm() {
               fullWidth
               name="password"
               label="Password"
+              value={userDetails.password}
               id="password"
               type="password"
               onChange={handleChange}
@@ -153,6 +157,7 @@ export default function RegistrationForm() {
               fullWidth
               name="phone"
               label="Phone"
+              value={userDetails.phone}
               id="phone"
               onChange={handleChange}
             />

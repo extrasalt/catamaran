@@ -53,7 +53,7 @@ trait CatamaranRoutes extends SprayJsonSupport with ResponseFormats {
         }
       }
     }
-  } ~ path("volunteer") {
+  } ~ path("register") {
     post {
       entity(as[VolunteerInfo]) { volunteerInfo =>
         complete(catamaranService.registerUser(volunteerInfo))

@@ -14,7 +14,7 @@ trait UserSchema {
 
   val users = lifted.TableQuery[Users]
 
-  protected class Users(tag: Tag) extends Table[User](tag, "volunteers") {
+  protected class Users(tag: Tag) extends Table[User](tag, "users") {
     def volunteerId = column[UUID]("volunteer_id", O.PrimaryKey)
 
     def email = column[String]("email")
