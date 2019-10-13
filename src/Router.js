@@ -5,12 +5,14 @@ import RegistrationForm from './forms/Registration';
 import BoardView from "./BoardView";
 import SigninForm from './forms/Signin';
 import Header from './Header';
+import SuccessBg from './images/success.png';
 
 const SuccessPage = () => {
 	return (
 		<React.Fragment>
       	<Header />
-			<h3>Your issue has been successfully registered with us. Updates will be sent through whatsapp.</h3>
+        <img src={SuccessBg} style={{marginLeft: 'auto', marginRight: 'auto', marginTop: 100, width: 300, height: 300, display: 'block', position: 'relative' }} />
+			  <center><h3>Your issue has been successfully registered with us. Updates will be sent through whatsapp.</h3></center>
 		</React.Fragment>
 	);
 };
