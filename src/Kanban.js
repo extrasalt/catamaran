@@ -63,9 +63,10 @@ class KanbanBoard extends React.Component {
   handleOnDragEnd(e, project) {
     console.log(project);
     const updatedProjects = this.state.projects.slice(0);
-    updatedProjects.find(projectObject => {
-      return projectObject.phone === project.phone;
-    }).status = this.state.draggedOverCol;
+    const modifiedProject = updatedProjects.find(projectObject => {
+      return projectObject.id === project.id;
+    });
+    modifiedProject.status = this.state.draggedOverCol;
 
     fetch("http://localhost:4000/issue", {
       method: "PATCH",
@@ -73,7 +74,7 @@ class KanbanBoard extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        id: updatedProjects[0].id,
+        id: modifiedProject.id,
         status: this.state.draggedOverCol
       })
     }).catch(error => console.log(error));
