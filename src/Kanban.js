@@ -101,7 +101,9 @@ class KanbanBoard extends React.Component {
                 ) {
                   return (
                     project.status === column.name &&
-                    project.message.includes(this.props.data)
+                    project.message
+                      .toLowerCase()
+                      .includes(this.props.data.toLowerCase())
                   );
                 }
                 return project.status === column.name;
