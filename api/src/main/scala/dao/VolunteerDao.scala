@@ -22,7 +22,7 @@ case class VolunteerDao(database: SqlDatabase)(implicit val ec: ExecutionContext
           v.lastName === lastName &&
           v.email === email &&
           v.gender === gender &&
-          v.phoneNo === phoneNo
+          v.phone === phoneNo
     }.result).map(_.headOption)
   }
 

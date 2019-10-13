@@ -12,8 +12,8 @@ case class Ticket(id: UUID, issueType: String, message: String, status: String, 
                   createdDate: Timestamp, dispatchedDate: Option[Timestamp], resolvedDate: Option[Timestamp])
 
 object Ticket {
-  def withRandomUUID(issueType: String, message: String, status: String, address: String, phoneNo: String): Ticket = {
-    Ticket(UUID.randomUUID(), issueType, message, status, address, phoneNo, new Timestamp(DateTime.now().getMillis), None, None)
+  def withRandomUUID(issueType: String, message: String, status: String, address: String, phone: String): Ticket = {
+    Ticket(UUID.randomUUID(), issueType, message, status, address, phone, new Timestamp(DateTime.now().getMillis), None, None)
   }
 
   def fromTicketInput(ticketInput: TicketInput, status: String): Ticket = {
@@ -39,7 +39,7 @@ trait TicketSchema {
 
     def address = column[String]("address")
 
-    def phoneNo = column[String]("phone_number")
+    def phone = column[String]("phone_number")
 
     def createdDate = column[Timestamp]("created_timestamp")
 
@@ -48,7 +48,7 @@ trait TicketSchema {
     def resolvedDate = column[Option[Timestamp]]("resolved_timestamp")
 
 
-    def * = (id, issueType, message, status, address, phoneNo, createdDate, dispatchedDate, resolvedDate) <>
+    def * = (id, issueType, message, status, address, phone, createdDate, dispatchedDate, resolvedDate) <>
       ((Ticket.apply _).tupled, Ticket.unapply)
   }
 

@@ -6,7 +6,7 @@ import service.VolunteerInfo
 import slick.lifted
 import sql.SqlDatabase
 
-case class Volunteer(id: UUID, firstName: String, lastName: String, gender: String, email: String, phoneNo: String)
+case class Volunteer(id: UUID, firstName: String, lastName: String, gender: String, email: String, phone: String)
 
 object Volunteer {
   def apply(volunteerInfo: VolunteerInfo): Volunteer = {
@@ -33,11 +33,11 @@ trait VolunteerSchema {
 
     def email = column[String]("email")
 
-    def phoneNo = column[String]("phone_number")
+    def phone = column[String]("phone_number")
 
     val volunteerApplyFn:(UUID, String, String, String, String, String) => Volunteer = Volunteer.apply
 
-    def * = (id, firstName, lastName, gender, email, phoneNo) <>
+    def * = (id, firstName, lastName, gender, email, phone) <>
       (volunteerApplyFn.tupled, Volunteer.unapply)
   }
 

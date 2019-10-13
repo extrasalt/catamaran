@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -38,7 +38,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function IssueForm() {
   const classes = useStyles();
-  const [issue, setIssue] = useState({issueType: "", message: "", address: "", phone: ""});
+  const [issue, setIssue] = useState({issueType: "supplies", message: "", address: "", phone: ""});
+  const forceUpdate = useCallback(() => setIssue({}), []);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const handleClose = (event, reason) => {
@@ -64,7 +65,8 @@ export default function IssueForm() {
     .then((response) => {
       setMessage('Issue created. Please check your whatsapp for more information.');
       setOpen(true);
-      navigate('/create');
+      forceUpdate();
+      navigate('/success');
     })
     .catch((error) => {
       setMessage('Error while creating Issue. Please try again in sometime.');
@@ -83,7 +85,7 @@ export default function IssueForm() {
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit}>
             <FormLabel component="legend">Issue Type</FormLabel>
-            <RadioGroup name="issueType" onChange={handleChange}>
+            <RadioGroup name="issueType" value={issue.issueType} onChange={handleChange}>
               <FormControlLabel value="supplies" control={<Radio />} label="Supplies" />
               <FormControlLabel value="stranded" control={<Radio />} label="Stranded" />
             </RadioGroup>
@@ -96,6 +98,7 @@ export default function IssueForm() {
               id="message"
               label="Message"
               name="message"
+              value={issue.message}
               onChange={handleChange}
               autoFocus
               multiline
@@ -107,6 +110,7 @@ export default function IssueForm() {
               required
               fullWidth
               name="address"
+              value={issue.address}
               label="Address"
               id="address"
               onChange={handleChange}
@@ -119,6 +123,7 @@ export default function IssueForm() {
               required
               fullWidth
               name="phone"
+              value={issue.phone}
               label="Phone"
               id="phone"
               onChange={handleChange}
