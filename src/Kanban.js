@@ -43,7 +43,9 @@ class KanbanBoard extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ projects: tickets, isLoading: false });
+    fetch("http://localhost:4000/list/issues")
+      .then(response => response.json())
+      .then(t => this.setState({ projects: t, isLoading: false }));
   }
 
   //this is called when a Kanban card is dragged over a column (called by column)
@@ -57,7 +59,7 @@ class KanbanBoard extends React.Component {
     console.log(project);
     const updatedProjects = this.state.projects.slice(0);
     updatedProjects.find(projectObject => {
-      return projectObject.number === project.number;
+      return projectObject.phoneNo === project.phoneNo;
     }).status = this.state.draggedOverCol;
     this.setState({ projects: updatedProjects });
   }
@@ -106,7 +108,7 @@ class KanbanColumn extends React.Component {
       return (
         <KanbanCard
           project={project}
-          key={project.number}
+          key={project.phoneNo}
           onDragEnd={this.props.onDragEnd}
         />
       );
@@ -160,13 +162,6 @@ class KanbanCard extends React.Component {
   }
 
   render() {
-    var issueBody = {
-      status: "Dispatched",
-      type: "Supplies",
-      message: "Fire!! Fire!!",
-      address: "OMR",
-      number: "123"
-    };
     const cardStyle = {
       paddingLeft: "0px",
       paddingTop: "5px",
@@ -204,7 +199,7 @@ let tickets = [
     message:
       "Help! Need supplies at lorem impsum nagar. We've been starving for 48 hours now and nobody has reached us.",
     address: "OMR",
-    number: "9008080882",
+    phoneNo: "9008080882",
     project_stage: 1
   },
   {
@@ -213,7 +208,7 @@ let tickets = [
     message:
       "Stranded inside Ceebruhs Boulevard. Water for 20 feet. First floor is compeltely underwater. We're in the fourth floor with no way to get out ",
     address: "Perungudi",
-    number: "9008444444",
+    phoneNo: "9008444444",
     project_stage: 2
   },
   {
@@ -222,7 +217,7 @@ let tickets = [
     message:
       "Need help checking on my family. My family (Amit Kumar Doe and Ananta Doo) in Perungudi has not been reachable for the past 20 hours. Please check on them",
     address: "Perungudi2",
-    number: "8479814445",
+    phoneNo: "8479814445",
     project_stage: 3
   }
 ];
