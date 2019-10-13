@@ -219,7 +219,7 @@ let tickets = [
     type: "Supplies",
     message:
       "Help! Need supplies at lorem impsum nagar. We've been starving for 48 hours now and nobody has reached us.",
-    address: "OMR",
+    address: "3, madambakkam main road, Chennai",
     phoneNo: "9008080882",
     project_stage: 1
   },
@@ -228,7 +228,8 @@ let tickets = [
     type: "Stranded",
     message:
       "Stranded inside Ceebruhs Boulevard. Water for 20 feet. First floor is compeltely underwater. We're in the fourth floor with no way to get out ",
-    address: "Perungudi",
+    address:
+      "OMR Service Rd, PTK nagar, Thiruvanmiyur, Chennai, Tamil Nadu 600096",
     phoneNo: "9008444444",
     project_stage: 2
   },
@@ -237,7 +238,8 @@ let tickets = [
     type: "Stranded",
     message:
       "Need help checking on my family. My family (Amit Kumar Doe and Ananta Doo) in Perungudi has not been reachable for the past 20 hours. Please check on them",
-    address: "Perungudi2",
+    address:
+      "26, Old Mahabalipuram Rd, Srinivasa Nagar, Kandancavadi, Perungudi, Chennai, Tamil Nadu 600096",
     phoneNo: "8479814445",
     project_stage: 3
   }
