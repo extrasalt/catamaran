@@ -10,7 +10,7 @@ class Kanban extends React.Component {
 
     return (
       <div style={style}>
-        <KanbanBoard />
+        <KanbanBoard data={this.props.data} />
       </div>
     );
   }
@@ -89,6 +89,15 @@ class KanbanBoard extends React.Component {
               name={column.name}
               stage={column.stage}
               projects={this.state.projects.filter(project => {
+                if (
+                  this.props.data.length > 3 &&
+                  this.props.data !== "Search"
+                ) {
+                  return (
+                    project.status === column.name &&
+                    project.message.includes(this.props.data)
+                  );
+                }
                 return project.status === column.name;
               })}
               onDragEnter={this.handleOnDragEnter}

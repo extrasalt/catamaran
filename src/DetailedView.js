@@ -29,7 +29,6 @@ function DetailedView(props) {
 }
 
 function Ticket(props) {
-  console.log(props);
   var styles = {
     padding: 5,
     paddingLeft: 10,
@@ -53,7 +52,7 @@ function Ticket(props) {
   var mapsLink =
     "https://www.google.com/maps/search/?api=1&query=" + props.body.address;
   return (
-    <Badge badgeContent={props.body.type} color="primary">
+    <Badge badgeContent={props.body.issueType} color="primary">
       <div style={styles}>
         <div
           style={{
