@@ -70,12 +70,17 @@ function Ticket(props) {
 
         <div style={messageBubble}>{props.body.message}</div>
 
-        <div>
-          <span> Address: </span> <span> {props.body.address} </span>
-          {/* //TODO: Add font awesome */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center"
+          }}
+        >
           <Button href={mapsLink}>
             <RoomIcon />
           </Button>
+          <span> {props.body.address} </span>
+          {/* //TODO: Add font awesome */}
         </div>
       </div>
     </Badge>
