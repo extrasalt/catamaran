@@ -66,7 +66,7 @@ export default function IssueForm() {
       setMessage('Issue created. Please check your whatsapp for more information.');
       setOpen(true);
       forceUpdate();
-      setTimeout(() => navigate('/success'), 2000);
+      setTimeout(() => navigate('/success'), 500);
     })
     .catch((error) => {
       setMessage('Error while creating Issue. Please try again in sometime.');

@@ -30,6 +30,7 @@ class KanbanBoard extends React.Component {
     };
     this.handleOnDragEnter = this.handleOnDragEnter.bind(this);
     this.handleOnDragEnd = this.handleOnDragEnd.bind(this);
+    this.getData = this.getData.bind(this);
     this.columns = [
       { name: "Open", stage: 1 },
       { name: "Dispatched", stage: 2 },
@@ -42,10 +43,14 @@ class KanbanBoard extends React.Component {
     };
   }
 
-  componentDidMount() {
+  getData() {
     fetch("http://localhost:4000/list/issues")
       .then(response => response.json())
       .then(t => this.setState({ projects: t, isLoading: false }));
+  }
+  componentDidMount() {
+    this.getData();
+    setInterval(this.getData, 5000);
   }
 
   //this is called when a Kanban card is dragged over a column (called by column)
