@@ -8,7 +8,6 @@ import com.typesafe.scalalogging.StrictLogging
 import dao.{AssignedTicketDao, TicketDao, UserDao, VolunteerDao}
 import service.{CatamaranService, TwilioClient}
 import sql.{DatabaseConfig, SqlDatabase}
-import utils.AkkaHttpClient
 
 import scala.concurrent.ExecutionContext
 
@@ -24,7 +23,6 @@ object CatamaranApi extends App with StrictLogging with CatamaranRoutes {
   val databaseConfig = new DatabaseConfig {
     override def rootConfig: Config = ConfigFactory.load().getConfig("catamaran")
   }
-  val httpClient                 = AkkaHttpClient()
   val twilioConfig = ConfigFactory.load().getConfig("catamaran")
 
   val sqlDatabase = SqlDatabase.create(databaseConfig)
@@ -34,7 +32,7 @@ object CatamaranApi extends App with StrictLogging with CatamaranRoutes {
   val userDao = new UserDao(sqlDatabase)
   val volunteerDao = new VolunteerDao(sqlDatabase)
   val assignedTicketDao = new AssignedTicketDao(sqlDatabase)
-  val twilioClient = TwilioClient(twilioConfig, httpClient)
+  val twilioClient = TwilioClient(twilioConfig)
   val catamaranService = new CatamaranService(catamaranDao, userDao, volunteerDao, assignedTicketDao, twilioClient)
 
   val service = new ServiceRouter(catamaranRoutes)

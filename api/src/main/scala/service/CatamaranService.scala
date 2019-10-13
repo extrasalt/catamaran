@@ -17,7 +17,7 @@ class CatamaranService(ticketDao: TicketDao, userDao: UserDao, volunteerDao: Vol
       )
       case None => for {
         t <- ticketDao.addTicket(Ticket.fromTicketInput(ticketInput, "Open"))
-        response <- twilioClient.sendMessage(TwilioRequest("", s"whatsapp:+91${t.phone}", s"Please check your issue status here -> http://localhost:3000/show/${t.id}")).map(_ => TicketInsertSuccess(s"Ticket ${t.id} was successfully created"))
+        response <- twilioClient.sendMessage(TwilioRequest("", s"whatsapp:+91${t.phone}", "Your help is on the way!")).map(_ => TicketInsertSuccess(s"Ticket ${t.id} was successfully created"))
       } yield response
     }
   }

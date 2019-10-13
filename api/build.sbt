@@ -16,6 +16,9 @@ val akkaStack = Seq(
   "com.typesafe.akka" %% "akka-stream" % akkaVersion
 )
 
+
+val scalaj = "org.scalaj" %% "scalaj-http" % "2.4.2"
+
 val scaldingArgs = "com.twitter" %% "scalding-args" % "0.17.4"
 
 val logbackVersion = "1.1.7"
@@ -36,6 +39,6 @@ val flyway = "org.flywaydb" % "flyway-core" % "4.1.1"
 val slickStack = Seq(slick, postgres, slickHikari, flyway)
 
 
-val rootDependencies = Seq(scaldingArgs) ++ akkaStack ++ slickStack ++ logging ++ jodaDependencies
+val rootDependencies = Seq(scaldingArgs, scalaj) ++ akkaStack ++ slickStack ++ logging ++ jodaDependencies
 
 libraryDependencies ++= rootDependencies
