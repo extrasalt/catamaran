@@ -61,7 +61,7 @@ function Ticket(props) {
           }}
         >
           <PhoneIcon />
-          <span>{props.body.phoneNo}</span>
+          <span>{props.body.phone}</span>
         </div>
 
         {/* <span style={statusColor}> {props.body.status}</span> */}

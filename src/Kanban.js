@@ -59,7 +59,7 @@ class KanbanBoard extends React.Component {
     console.log(project);
     const updatedProjects = this.state.projects.slice(0);
     updatedProjects.find(projectObject => {
-      return projectObject.phoneNo === project.phoneNo;
+      return projectObject.phone === project.phone;
     }).status = this.state.draggedOverCol;
 
     fetch("http://localhost:4000/issue", {
@@ -129,7 +129,7 @@ class KanbanColumn extends React.Component {
       return (
         <KanbanCard
           project={project}
-          key={project.phoneNo}
+          key={project.phone}
           onDragEnd={this.props.onDragEnd}
         />
       );
